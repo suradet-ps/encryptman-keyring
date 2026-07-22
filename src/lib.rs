@@ -19,12 +19,13 @@
 //! // Subsequent calls: loads the existing key from the keychain.
 //! let vault = Vault::new("my-app").unwrap();
 //!
-//! // Encrypt
-//! let ciphertext = vault.encrypt("my_database_password").unwrap();
+//! let encrypted = vault.encrypt("my_database_password").unwrap();
+//! let decrypted = vault.decrypt(&encrypted).unwrap();
 //!
-//! // Decrypt
-//! let plaintext = vault.decrypt(&ciphertext).unwrap();
-//! assert_eq!(plaintext, "my_database_password");
+//! assert_eq!(decrypted, "my_database_password");
+//!
+//! // Delete the key from the keychain when no longer needed
+//! Vault::delete("my-app").unwrap();
 //! ```
 //!
 //! ## Design

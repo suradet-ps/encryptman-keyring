@@ -26,77 +26,72 @@ encryptman-keyring = "0.1"
 
 ## Quick Start
 
-```no_run
+```rust
 use encryptman_keyring::Vault;
 
 // First call: generates key → stores in OS keychain
 // Later calls: loads existing key from keychain
-let vault = Vault::new("my-app")?;
+let vault = Vault::new("my-app").unwrap();
 
-let encrypted = vault.encrypt("my_database_password")?;
-let decrypted = vault.decrypt(&encrypted)?;
+let encrypted = vault.encrypt("my_database_password").unwrap();
+let decrypted = vault.decrypt(&encrypted).unwrap();
 
 assert_eq!(decrypted, "my_database_password");
 
 // Delete the key from the keychain when no longer needed
-Vault::delete("my-app")?;
-# Ok::<(), encryptman_keyring::Error>(())
+Vault::delete("my-app").unwrap();
 ```
 
 ## Usage
 
 ### Binary data
 
-```no_run
+```rust
 use encryptman_keyring::Vault;
 
-let vault = Vault::new("my-app")?;
+let vault = Vault::new("my-app").unwrap();
 
 let data = b"binary secret data";
-let encrypted = vault.encrypt_bytes(data)?;
-let decrypted = vault.decrypt_bytes(&encrypted)?;
+let encrypted = vault.encrypt_bytes(data).unwrap();
+let decrypted = vault.decrypt_bytes(&encrypted).unwrap();
 
 assert_eq!(decrypted, data);
-# Ok::<(), encryptman_keyring::Error>(())
 ```
 
 ### Multiple contexts with one vault
 
-```no_run
+```rust
 use encryptman_keyring::Vault;
 
-let vault = Vault::new("my-app")?;
+let vault = Vault::new("my-app").unwrap();
 
-let db_secret = vault.encrypt_with_context("database", "postgres://...")?;
-let api_secret = vault.encrypt_with_context("api-keys", "sk-12345")?;
+let db_secret = vault.encrypt_with_context("database", "postgres://...").unwrap();
+let api_secret = vault.encrypt_with_context("api-keys", "sk-12345").unwrap();
 
 // Same plaintext, different contexts → different ciphertext
 assert_ne!(db_secret, api_secret);
 
 // Decrypt with the matching context
-let db_plain = vault.decrypt_with_context("database", &db_secret)?;
-# Ok::<(), encryptman_keyring::Error>(())
+let db_plain = vault.decrypt_with_context("database", &db_secret).unwrap();
 ```
 
 ### Custom target (username)
 
-```no_run
+```rust
 use encryptman_keyring::Vault;
 
 // Store separate keys for different users / environments
-let dev_vault = Vault::new_with_target("my-app", "development")?;
-let prod_vault = Vault::new_with_target("my-app", "production")?;
-# Ok::<(), encryptman_keyring::Error>(())
+let dev_vault = Vault::new_with_target("my-app", "development").unwrap();
+let prod_vault = Vault::new_with_target("my-app", "production").unwrap();
 ```
 
 ### Migrating from file-based keys
 
-```no_run
+```rust
 use encryptman_keyring::Vault;
 
 // Reads .tb_key → stores in keychain → deletes the file
-let vault = Vault::migrate_from_file("my-app", "/path/to/.tb_key")?;
-# Ok::<(), encryptman_keyring::Error>(())
+let vault = Vault::migrate_from_file("my-app", std::path::Path::new("/path/to/.tb_key")).unwrap();
 ```
 
 ## How It Works
