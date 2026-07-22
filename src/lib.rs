@@ -235,11 +235,7 @@ impl Vault {
     /// # Errors
     ///
     /// Returns [`Error::Crypto`] if encryption fails.
-    pub fn encrypt_with_context(
-        &self,
-        context: &str,
-        plaintext: &str,
-    ) -> Result<String, Error> {
+    pub fn encrypt_with_context(&self, context: &str, plaintext: &str) -> Result<String, Error> {
         Ok(encryptman::encrypt_with_context(
             &self.master_key,
             context,
@@ -254,11 +250,7 @@ impl Vault {
     /// # Errors
     ///
     /// Returns [`Error::Crypto`] if decryption fails.
-    pub fn decrypt_with_context(
-        &self,
-        context: &str,
-        ciphertext: &str,
-    ) -> Result<String, Error> {
+    pub fn decrypt_with_context(&self, context: &str, ciphertext: &str) -> Result<String, Error> {
         Ok(encryptman::decrypt_with_context(
             &self.master_key,
             context,
@@ -440,7 +432,10 @@ mod tests {
     fn debug_does_not_leak_key() {
         let vault = Vault::new("test-encryptman-keyring-debug").unwrap();
         let debug = format!("{:?}", vault);
-        assert_eq!(debug, "Vault { service: \"test-encryptman-keyring-debug\", master_key: \"***\" }");
+        assert_eq!(
+            debug,
+            "Vault { service: \"test-encryptman-keyring-debug\", master_key: \"***\" }"
+        );
         let _ = Vault::delete("test-encryptman-keyring-debug");
     }
 
@@ -466,8 +461,7 @@ mod tests {
         let key_bytes = [42u8; 32];
         fs::write(&key_path, key_bytes).unwrap();
 
-        let vault =
-            Vault::migrate_from_file("test-encryptman-keyring-migrate", &key_path).unwrap();
+        let vault = Vault::migrate_from_file("test-encryptman-keyring-migrate", &key_path).unwrap();
         assert_eq!(vault.master_key().as_bytes(), &key_bytes);
         assert!(
             !key_path.exists(),
@@ -490,8 +484,7 @@ mod tests {
         let key_path = dir.path().join(".tb_key");
         fs::write(&key_path, [1u8; 16]).unwrap();
 
-        let result =
-            Vault::migrate_from_file("test-encryptman-keyring-migrate-err", &key_path);
+        let result = Vault::migrate_from_file("test-encryptman-keyring-migrate-err", &key_path);
         assert!(result.is_err());
         assert!(key_path.exists());
     }
@@ -537,6 +530,11 @@ mod tests {
         let vault = Vault::new("test-encryptman-keyring-del").unwrap();
         let ct = vault.encrypt("test").unwrap();
         Vault::delete("test-encryptman-keyring-del").unwrap();
-        assert!(Vault::new("test-encryptman-keyring-del").unwrap().decrypt(&ct).is_err());
+        assert!(
+            Vault::new("test-encryptman-keyring-del")
+                .unwrap()
+                .decrypt(&ct)
+                .is_err()
+        );
     }
 }
