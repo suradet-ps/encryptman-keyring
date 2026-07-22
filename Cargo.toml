@@ -1,0 +1,25 @@
+[package]
+name = "encryptman-keyring"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "OS keychain-backed master key storage for encryptman"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/suradet-ps/encryptman-keyring"
+keywords = ["encryption", "keyring", "keychain", "secrets", "encryptman"]
+categories = ["cryptography", "config"]
+readme = "README.md"
+documentation = "https://docs.rs/encryptman-keyring"
+include = ["src/**", "README.md", "LICENSE*", "CHANGELOG.md"]
+
+[lints.rust]
+missing_docs = "deny"
+
+[dependencies]
+encryptman = "0.2.0"
+keyring = "4.1"
+thiserror = "2"
+
+[dev-dependencies]
+tempfile = "3"
+serial_test = "3"
