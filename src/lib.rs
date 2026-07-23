@@ -47,13 +47,13 @@
 //!
 //! ## Migration from file-based keys
 //!
-//! Use [`Vault::migrate_from_file`] to import an existing `.tb_key` file
+//! Use [`Vault::migrate_from_file`] to import an existing `.key` file
 //! into the OS keychain and delete the file:
 //!
 //! ```no_run
 //! use encryptman_keyring::Vault;
 //!
-//! let vault = Vault::migrate_from_file("my-app", std::path::Path::new("/path/to/.tb_key")).unwrap();
+//! let vault = Vault::migrate_from_file("my-app", std::path::Path::new("/path/to/.key")).unwrap();
 //! ```
 //!
 //! ## When NOT to use this crate
@@ -458,7 +458,7 @@ mod tests {
         use tempfile::TempDir;
 
         let dir = TempDir::new().unwrap();
-        let key_path = dir.path().join(".tb_key");
+        let key_path = dir.path().join(".key");
         let key_bytes = [42u8; 32];
         fs::write(&key_path, key_bytes).unwrap();
 
@@ -482,7 +482,7 @@ mod tests {
         use tempfile::TempDir;
 
         let dir = TempDir::new().unwrap();
-        let key_path = dir.path().join(".tb_key");
+        let key_path = dir.path().join(".key");
         fs::write(&key_path, [1u8; 16]).unwrap();
 
         let result = Vault::migrate_from_file("test-encryptman-keyring-migrate-err", &key_path);

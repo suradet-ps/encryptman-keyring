@@ -90,8 +90,8 @@ let prod_vault = Vault::new_with_target("my-app", "production").unwrap();
 ```rust
 use encryptman_keyring::Vault;
 
-// Reads .tb_key → stores in keychain → deletes the file
-let vault = Vault::migrate_from_file("my-app", std::path::Path::new("/path/to/.tb_key")).unwrap();
+// Reads .key → stores in keychain → deletes the file
+let vault = Vault::migrate_from_file("my-app", std::path::Path::new("/path/to/.key")).unwrap();
 ```
 
 ## How It Works
