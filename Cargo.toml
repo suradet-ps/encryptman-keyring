@@ -16,10 +16,10 @@ include = ["src/**", "README.md", "LICENSE*", "CHANGELOG.md"]
 missing_docs = "deny"
 
 [dependencies]
-encryptman = "0.2.0"
-keyring = "4.1"
-thiserror = "2"
+encryptman = "0.2.2"
+keyring = "4.1.6"
+thiserror = "2.0.19"
 
 [dev-dependencies]
-tempfile = "3"
-serial_test = "3"
+tempfile = "3.27.0"
+serial_test = "4.0.1"
