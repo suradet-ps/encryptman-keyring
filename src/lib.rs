@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 //! # encryptman-keyring
 //!
 //! OS keychain-backed master key storage for
@@ -65,6 +67,7 @@
 
 use encryptman::MasterKey;
 use thiserror::Error;
+use zeroize::Zeroize;
 
 /// The keyring username used to store the master key.
 const KEY_USERNAME: &str = "master-key";
@@ -148,7 +151,7 @@ impl Vault {
             Ok(bytes) => MasterKey::try_from(bytes.as_slice())
                 .map_err(|_| Error::InvalidKeyLength(bytes.len()))?,
             Err(keyring::Error::NoEntry) => {
-                let key = MasterKey::generate();
+                let key = MasterKey::generate()?;
                 entry.set_secret(key.as_bytes())?;
                 key
             }
@@ -184,20 +187,23 @@ impl Vault {
         target: &str,
         key_path: &std::path::Path,
     ) -> Result<Self, Error> {
-        let raw = std::fs::read(key_path)?;
+        let mut raw = std::fs::read(key_path)?;
         if raw.len() != 32 {
             return Err(Error::InvalidFileKeyLength(raw.len()));
         }
         let mut bytes = [0u8; 32];
         bytes.copy_from_slice(&raw);
+        raw.zeroize();
 
         let entry = keyring::Entry::new(service, target)?;
-        entry.set_secret(&bytes)?;
+        let set_result = entry.set_secret(&bytes);
+        let master_key = MasterKey::from_bytes(bytes);
+        bytes.zeroize();
+        set_result?;
 
         // Delete the file after successful migration
         std::fs::remove_file(key_path)?;
 
-        let master_key = MasterKey::from_bytes(bytes);
         Ok(Self {
             service: service.to_string(),
             master_key,
