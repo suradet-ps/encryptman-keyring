@@ -127,7 +127,7 @@ Vault::new("my-app")
 
 ## Minimum Supported Rust Version
 
-MSRV: **1.85** (edition 2024)
+MSRV: **1.88** (edition 2024)
 
 ## License
 

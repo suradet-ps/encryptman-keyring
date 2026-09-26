@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.4] - 2026-09-26
+
+### Changed
+
+- Upgrade `encryptman` from 0.3.0 to 0.4.0, `keyring` from 4.1.6 to
+  4.2.0, `thiserror` from 2.0.19 to 2.0.21, and `zeroize` to 1.9.0.
+  Ciphertext and keychain storage formats are unchanged, so existing
+  encrypted data and stored keys remain fully compatible - no migration
+  needed.
+- Raise MSRV from 1.85 to 1.88, matching `keyring`'s requirement.
+- Replace em dashes with hyphens in documentation.
 
 ## [0.1.3] - 2026-08-14
 
