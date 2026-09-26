@@ -8,12 +8,12 @@ OS keychain-backed master key storage for [encryptman](https://crates.io/crates/
 
 ## Features
 
-- **Zero file management** — master key stored in OS keychain, no `.key` files on disk
-- **Cross-platform** — Windows Credential Manager, macOS Keychain, Linux Secret Service
-- **One-call setup** — `Vault::new("my-app")` generates or loads the key automatically
-- **File migration** — `Vault::migrate_from_file()` imports existing key files and deletes them
-- **Domain isolation** — service name used as HKDF context for encryptman
-- **Secure by default** — `MasterKey` with zeroize-on-drop, never written to disk
+- **Zero file management** - master key stored in OS keychain, no `.key` files on disk
+- **Cross-platform** - Windows Credential Manager, macOS Keychain, Linux Secret Service
+- **One-call setup** - `Vault::new("my-app")` generates or loads the key automatically
+- **File migration** - `Vault::migrate_from_file()` imports existing key files and deletes them
+- **Domain isolation** - service name used as HKDF context for encryptman
+- **Secure by default** - `MasterKey` with zeroize-on-drop, never written to disk
 
 ## Installation
 
@@ -121,8 +121,8 @@ Vault::new("my-app")
 
 ## When NOT to use this crate
 
-- **Headless / CI environments** — the OS keychain may not be available.
-- **Multi-user servers** — keyring entries are per-user; consider a shared
+- **Headless / CI environments** - the OS keychain may not be available.
+- **Multi-user servers** - keyring entries are per-user; consider a shared
   secret store like Vault or AWS Secrets Manager.
 
 ## Minimum Supported Rust Version

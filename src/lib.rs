@@ -8,9 +8,9 @@
 //! This crate eliminates the need to manage raw key files by storing the
 //! master key in the operating system's native credential store:
 //!
-//! - **Windows** — Credential Manager
-//! - **macOS** — Keychain Services
-//! - **Linux** — Secret Service (DBus)
+//! - **Windows** - Credential Manager
+//! - **macOS** - Keychain Services
+//! - **Linux** - Secret Service (DBus)
 //!
 //! ## Quick Start
 //!
@@ -60,9 +60,9 @@
 //!
 //! ## When NOT to use this crate
 //!
-//! - **Headless / CI environments** — the OS keychain may not be available.
+//! - **Headless / CI environments** - the OS keychain may not be available.
 //!   Use file-based key storage instead.
-//! - **Multi-user servers** — keyring entries are per-user; consider a
+//! - **Multi-user servers** - keyring entries are per-user; consider a
 //!   shared secret store like Vault or AWS Secrets Manager.
 
 use encryptman::MasterKey;
@@ -342,7 +342,7 @@ impl Vault {
     /// Delete the master key from the OS keychain.
     ///
     /// This is an associated function because deletion only requires the
-    /// service name — no vault instance (or master key) is needed.
+    /// service name - no vault instance (or master key) is needed.
     ///
     /// **Warning**: This is destructive. All encrypted data will become
     /// unrecoverable unless you have a backup of the key.
@@ -356,7 +356,7 @@ impl Vault {
 
     /// Delete the master key with a custom target from the OS keychain.
     ///
-    /// This is an associated function — no vault instance needed.
+    /// This is an associated function - no vault instance needed.
     ///
     /// See [`Vault::delete`] for details.
     pub fn delete_with_target(service: &str, target: &str) -> Result<(), Error> {
