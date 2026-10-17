@@ -16,7 +16,7 @@ include = ["src/**", "README.md", "LICENSE*", "CHANGELOG.md"]
 missing_docs = "deny"
 
 [dependencies]
-encryptman = "0.4"
+encryptman = "0.5"
 keyring = "4.2.0"
 thiserror = "2.0.21"
 zeroize = "1.9.0"
